@@ -21,6 +21,7 @@ function calc_cart_total() {
 
   set_cart_total_dom();
   update_shipping_icons();
+  update_tax_dom();
 }
 
 function set_cart_total_dom() {
@@ -44,4 +45,13 @@ function update_shipping_icons() {
       button.hide_free_shipping_icon();
     }
   }
+}
+
+function set_tax_dom(tax: number) {
+  // TODO: DOM 업데이트
+  console.log(tax);
+}
+
+function update_tax_dom() {
+  set_tax_dom(shopping_cart_total * 0.1);
 }
