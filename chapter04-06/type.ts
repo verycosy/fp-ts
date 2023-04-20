@@ -1,10 +1,10 @@
 export interface ShoppingCartItem {
-  name: string;
-  price: number;
+  readonly name: string;
+  readonly price: number;
 }
 
 export interface BuyButton {
-  item: ShoppingCartItem;
+  readonly item: ShoppingCartItem;
   show_free_shipping_icon: () => void;
   hide_free_shipping_icon: () => void;
 }
