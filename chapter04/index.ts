@@ -39,13 +39,17 @@ function get_buy_buttons_dom(): BuyButton[] {
   return [];
 }
 
+function isFreeShipping(amount: number, price: number) {
+  return amount + price >= 20;
+}
+
 function update_shipping_icons() {
   const buttons = get_buy_buttons_dom();
 
   for (const button of buttons) {
     const item = button.item;
 
-    if (item.price + shopping_cart_total >= 20) {
+    if (isFreeShipping(shopping_cart_total, item.price)) {
       button.show_free_shipping_icon();
     } else {
       button.hide_free_shipping_icon();
@@ -58,6 +62,10 @@ function set_tax_dom(tax: number) {
   console.log(tax);
 }
 
+function calc_tax(amount: number) {
+  return amount * 0.1;
+}
+
 function update_tax_dom() {
-  set_tax_dom(shopping_cart_total * 0.1);
+  set_tax_dom(calc_tax(shopping_cart_total));
 }
