@@ -8,6 +8,12 @@ function add_element_last<T>(array: T[], elem: T): T[] {
   return new_array;
 }
 
+function remove_items<T>(array: T[], idx: number, count: number) {
+  const copy = array.slice();
+  copy.splice(idx, count);
+  return copy;
+}
+
 function make_cart_item(name: string, price: number): ShoppingCartItem {
   return {
     name,
@@ -30,14 +36,12 @@ function add_item_to_cart(cart: Cart, name: string, price: number): void {
 }
 
 function remove_item_by_name(cart: Cart, name: string): Cart {
-  const new_cart = cart.slice();
-
-  const idx = new_cart.findIndex((item) => item.name === name);
+  const idx = cart.findIndex((item) => item.name === name);
   if (idx !== -1) {
-    new_cart.splice(idx, 1);
+    return remove_items(cart, idx, 1);
   }
 
-  return new_cart;
+  return cart;
 }
 
 function calc_total(cart: Cart): number {
