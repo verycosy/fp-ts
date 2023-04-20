@@ -8,3 +8,5 @@ export interface BuyButton {
   show_free_shipping_icon: () => void;
   hide_free_shipping_icon: () => void;
 }
+
+export type Cart = ShoppingCartItem[];

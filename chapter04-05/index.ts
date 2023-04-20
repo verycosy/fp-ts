@@ -1,9 +1,9 @@
-import { BuyButton, ShoppingCartItem } from './type';
+import { BuyButton, Cart, ShoppingCartItem } from './type';
 
-let shopping_cart: ShoppingCartItem[] = [];
+let shopping_cart: Cart = [];
 let shopping_cart_total = 0;
 
-function add_item(cart: ShoppingCartItem[], name: string, price: number) {
+function add_item(cart: Cart, name: string, price: number) {
   const new_cart = cart.slice();
   new_cart.push({ name, price });
 
@@ -15,7 +15,7 @@ function add_item_to_cart(name: string, price: number) {
   calc_cart_total();
 }
 
-function calc_total(cart: ShoppingCartItem[]) {
+function calc_total(cart: Cart) {
   let total = 0;
   for (const item of cart) {
     total += item.price;
@@ -39,8 +39,8 @@ function get_buy_buttons_dom(): BuyButton[] {
   return [];
 }
 
-function isFreeShipping(amount: number, price: number) {
-  return amount + price >= 20;
+function isFreeShipping(cart: Cart) {
+  return calc_total(cart) >= 20;
 }
 
 function update_shipping_icons() {
@@ -48,8 +48,9 @@ function update_shipping_icons() {
 
   for (const button of buttons) {
     const item = button.item;
+    const new_cart = add_item(shopping_cart, item.name, item.price);
 
-    if (isFreeShipping(shopping_cart_total, item.price)) {
+    if (isFreeShipping(new_cart)) {
       button.show_free_shipping_icon();
     } else {
       button.hide_free_shipping_icon();
