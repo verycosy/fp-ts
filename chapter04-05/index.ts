@@ -2,6 +2,12 @@ import { BuyButton, Cart, ShoppingCartItem } from './type';
 
 const shopping_cart: Cart = [];
 
+function add_element_last<T>(array: T[], elem: T): T[] {
+  const new_array = array.slice();
+  new_array.push(elem);
+  return new_array;
+}
+
 function make_cart_item(name: string, price: number): ShoppingCartItem {
   return {
     name,
@@ -10,14 +16,12 @@ function make_cart_item(name: string, price: number): ShoppingCartItem {
 }
 
 function add_item(cart: Cart, item: ShoppingCartItem): Cart {
-  const new_cart = cart.slice();
-  new_cart.push(item);
-
-  return new_cart;
+  return add_element_last(cart, item);
 }
 
 function add_item_to_cart(cart: Cart, name: string, price: number): void {
-  const new_cart = add_item(cart, make_cart_item(name, price));
+  const item = make_cart_item(name, price);
+  const new_cart = add_item(cart, item);
 
   const amount = calc_total(new_cart);
   set_cart_total_dom(amount);
@@ -51,7 +55,7 @@ function update_shipping_icons(cart: Cart): void {
 
   for (const button of buttons) {
     const item = button.item;
-    const new_cart = add_item(cart, item.name, item.price);
+    const new_cart = add_item(cart, item);
 
     if (isFreeShipping(new_cart)) {
       button.show_free_shipping_icon();
