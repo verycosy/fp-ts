@@ -1,7 +1,6 @@
-import { BuyButton, Cart, ShoppingCartItem } from './type';
+import { BuyButton, Cart } from './type';
 
-let shopping_cart: Cart = [];
-let shopping_cart_total = 0;
+const shopping_cart: Cart = [];
 
 function add_item(cart: Cart, name: string, price: number) {
   const new_cart = cart.slice();
@@ -12,7 +11,11 @@ function add_item(cart: Cart, name: string, price: number) {
 
 function add_item_to_cart(cart: Cart, name: string, price: number) {
   const new_cart = add_item(cart, name, price);
-  calc_cart_total(new_cart);
+
+  const amount = calc_total(new_cart);
+  set_cart_total_dom(amount);
+  update_shipping_icons(new_cart);
+  update_tax_dom(amount);
 }
 
 function calc_total(cart: Cart) {
@@ -21,13 +24,6 @@ function calc_total(cart: Cart) {
     total += item.price;
   }
   return total;
-}
-
-function calc_cart_total(cart: Cart) {
-  const amount = calc_total(cart);
-  set_cart_total_dom(amount);
-  update_shipping_icons(cart);
-  update_tax_dom(amount);
 }
 
 function set_cart_total_dom(amount: number) {
@@ -70,3 +66,5 @@ function calc_tax(amount: number) {
 function update_tax_dom(amount: number) {
   set_tax_dom(calc_tax(amount));
 }
+
+add_item_to_cart(shopping_cart, 'name', 3000);
