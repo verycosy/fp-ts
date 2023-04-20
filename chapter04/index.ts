@@ -12,13 +12,15 @@ function add_item_to_cart(name: string, price: number) {
   calc_cart_total();
 }
 
-function calc_cart_total() {
+function calc_total() {
   shopping_cart_total = 0;
-
   for (const item of shopping_cart) {
     shopping_cart_total += item.price;
   }
+}
 
+function calc_cart_total() {
+  calc_total();
   set_cart_total_dom();
   update_shipping_icons();
   update_tax_dom();
