@@ -46,8 +46,24 @@ function get_buy_buttons_dom(): BuyButton[] {
   return [];
 }
 
-function isFreeShipping(cart: Cart): boolean {
+function is_free_shipping(cart: Cart): boolean {
   return calc_total(cart) >= 20;
+}
+
+function is_free_shipping_with_item(
+  cart: Cart,
+  item: ShoppingCartItem
+): boolean {
+  const new_cart = add_item(cart, item);
+  return is_free_shipping(new_cart);
+}
+
+function set_free_shipping_icon(button: BuyButton, is_free: boolean) {
+  if (is_free) {
+    button.show_free_shipping_icon();
+  } else {
+    button.hide_free_shipping_icon();
+  }
 }
 
 function update_shipping_icons(cart: Cart): void {
@@ -55,13 +71,8 @@ function update_shipping_icons(cart: Cart): void {
 
   for (const button of buttons) {
     const item = button.item;
-    const new_cart = add_item(cart, item);
-
-    if (isFreeShipping(new_cart)) {
-      button.show_free_shipping_icon();
-    } else {
-      button.hide_free_shipping_icon();
-    }
+    const is_free = is_free_shipping_with_item(cart, item);
+    set_free_shipping_icon(button, is_free);
   }
 }
 
