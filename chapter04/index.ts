@@ -3,24 +3,25 @@ import { BuyButton, ShoppingCartItem } from './type';
 const shopping_cart: ShoppingCartItem[] = [];
 let shopping_cart_total = 0;
 
-function add_item_to_cart(name: string, price: number) {
-  shopping_cart.push({
-    name,
-    price,
-  });
+function add_item(cart: ShoppingCartItem[], name: string, price: number) {
+  cart.push({ name, price });
+}
 
+function add_item_to_cart(name: string, price: number) {
+  add_item(shopping_cart, name, price);
   calc_cart_total();
 }
 
-function calc_total() {
-  shopping_cart_total = 0;
-  for (const item of shopping_cart) {
-    shopping_cart_total += item.price;
+function calc_total(cart: ShoppingCartItem[]) {
+  let total = 0;
+  for (const item of cart) {
+    total += item.price;
   }
+  return total;
 }
 
 function calc_cart_total() {
-  calc_total();
+  shopping_cart_total = calc_total(shopping_cart);
   set_cart_total_dom();
   update_shipping_icons();
   update_tax_dom();
