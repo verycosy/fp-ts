@@ -10,19 +10,20 @@ export function remove_items<T>(array: T[], idx: number, count: number) {
   return copy; // or filter?
 }
 
-export function object_set<
-  T extends Record<string, unknown>,
-  K extends keyof T
->(object: T, key: K, value: T[K]) {
+export function object_set<T extends {}, K extends keyof T>(
+  object: T,
+  key: K,
+  value: T[K]
+): T {
   const copy = Object.assign({}, object);
   copy[key] = value;
   return copy;
 }
 
-export function object_delete<
-  T extends Record<string, unknown>,
-  K extends keyof T
->(object: T, key: K): Omit<T, K> {
+export function object_delete<T extends {}, K extends keyof T>(
+  object: T,
+  key: K
+): Omit<T, K> {
   const copy = Object.assign({}, object);
   delete copy[key];
   return copy;
