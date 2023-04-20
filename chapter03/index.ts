@@ -69,7 +69,7 @@ function fetchCouponsFromDB(): Coupon[] {
   return [];
 }
 
-function fetchSubscribersFromDB(): Subscriber[] {
+function fetchSubscribersFromDB(page: number): Subscriber[] {
   return [];
 }
 
@@ -85,10 +85,16 @@ function sendIssue() {
   const coupons = fetchCouponsFromDB();
   const goodCoupons = selectCouponsByRank(coupons, 'good');
   const bestCoupons = selectCouponsByRank(coupons, 'best');
-  const subscribers = fetchSubscribersFromDB();
-  const emails = emailsForSubscribers(subscribers, goodCoupons, bestCoupons);
+  let page = 0;
+  let subscribers = fetchSubscribersFromDB(page);
+  while (subscribers.length > 0) {
+    const emails = emailsForSubscribers(subscribers, goodCoupons, bestCoupons);
 
-  for (const email of emails) {
-    emailSystem.send(email);
+    for (const email of emails) {
+      emailSystem.send(email);
+    }
+
+    page++;
+    subscribers = fetchSubscribersFromDB(page);
   }
 }
