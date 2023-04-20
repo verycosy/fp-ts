@@ -1,18 +1,7 @@
 import { BuyButton, Cart, ShoppingCartItem } from './type';
+import { add_element_last, remove_items } from './utils';
 
 let shopping_cart: Cart = [];
-
-function add_element_last<T>(array: T[], elem: T): T[] {
-  const new_array = array.slice();
-  new_array.push(elem);
-  return new_array;
-}
-
-function remove_items<T>(array: T[], idx: number, count: number) {
-  const copy = array.slice();
-  copy.splice(idx, count);
-  return copy;
-}
 
 function make_cart_item(name: string, price: number): ShoppingCartItem {
   return {
