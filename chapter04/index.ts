@@ -1,4 +1,4 @@
-import { ShoppingCartItem } from './type';
+import { BuyButton, ShoppingCartItem } from './type';
 
 const shopping_cart: ShoppingCartItem[] = [];
 let shopping_cart_total = 0;
@@ -20,9 +20,28 @@ function calc_cart_total() {
   }
 
   set_cart_total_dom();
+  update_shipping_icons();
 }
 
 function set_cart_total_dom() {
   // TODO: DOM 업데이트
   console.log(shopping_cart_total);
+}
+
+function get_buy_buttons_dom(): BuyButton[] {
+  return [];
+}
+
+function update_shipping_icons() {
+  const buttons = get_buy_buttons_dom();
+
+  for (const button of buttons) {
+    const item = button.item;
+
+    if (item.price + shopping_cart_total >= 20) {
+      button.show_free_shipping_icon();
+    } else {
+      button.hide_free_shipping_icon();
+    }
+  }
 }
